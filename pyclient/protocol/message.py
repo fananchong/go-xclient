@@ -26,7 +26,7 @@ def unpack_header(rawdata):
 def unpack(rawdata):
     l, flag, cmd = unpack_header(rawdata)
     data = rawdata[DATA0_LEN:]
-    if l != len(data) + CMD_LEN:  # len = cmd + data
+    if l is not len(data) + CMD_LEN:  # len = cmd + data
         print("flag=", flag, "cmd=", cmd, "l=", l, " len(data)=", len(data))
         exit(1)
     return cmd, data

@@ -21,13 +21,13 @@ class GatewayClient(tcp_client.TcpClient):
         self.cmds[protocol.cmd.VERIFY_TOKEN] = self.on_verify_token_msg
 
     def verify_token(self):
-        if self.connect(self.address, self.port) is False:
+        if self.connect("网关", self.address, self.port) is False:
             return False
         log.info("开始发送令牌验证协议。 account: {0}".format(self.user.account))
         msg = protocol.gateway_pb2.MSG_GATEWAY_VERIFY_TOKEN()
         msg.Account = self.user.account
         msg.Token = self.token
-        self.send(protocol.cmd.LOGIN, msg)
+        self.send(protocol.cmd.VERIFY_TOKEN, msg)
         return True
 
     def on_verify_token_msg(self, data):

@@ -20,3 +20,4 @@ class User():
 
     def close(self):
         self.login_client.close()
+        self.gateway_client.close()

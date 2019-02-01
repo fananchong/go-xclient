@@ -18,7 +18,7 @@ class LoginClient(tcp_client.TcpClient):
         self.cmds[protocol.cmd.LOGIN] = self.on_login_msg
 
     def login(self):
-        if self.connect(self.cfg["addr"], self.cfg["port"]) is False:
+        if self.connect("登录", self.cfg["addr"], self.cfg["port"]) is False:
             return False
         log.info("开始发送登陆协议。 account: {0}".format(self.user.account))
         msg = protocol.login_pb2.MSG_LOGIN()
