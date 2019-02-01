@@ -29,6 +29,7 @@ class TcpClient:
             self.sock.connect((addr, int(port)))
             log.info("连接{3}服务器成功。 addr: {0}, port: {1}, account: {2}".format(
                 addr, port, self.derive.user.account, name))
+            #self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
             self.thread_recv_data_flag = "start"
             self.thread_recv_data = threading.Thread(
                 target=self.__thread_recv_data)
@@ -75,13 +76,18 @@ class TcpClient:
             try:
                 BUFSIZ = 128 * 1024
                 data = self.sock.recv(BUFSIZ)
+                if data is None or len(data) == 0:
+                    self.sock.close()
+                    self.sock = None
+                    break
             except Exception as e:
                 log.error(e)
-                self.sock = None
+                if self.sock is not None:
+                    self.sock.close()
+                    self.sock = None
                 log.info("[{1}] 关闭 TCP 接收数据线程。account: {0}".format(
                     self.derive.user.account, self.name))
                 return
-            if data is not None:
-                self.on_recv(data)
+            self.on_recv(data)
         log.info("[{1}] 关闭 TCP 接收数据线程。account: {0}".format(
             self.derive.user.account, self.name))

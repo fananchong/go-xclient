@@ -1,6 +1,7 @@
 #! python3
 # -*- coding: utf-8 -*-
 
+import wx
 import tcp_client
 import protocol.login_pb2
 import protocol.cmd
