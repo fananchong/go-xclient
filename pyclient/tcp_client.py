@@ -29,7 +29,6 @@ class TcpClient:
             self.sock.connect((addr, int(port)))
             log.info("连接{3}服务器成功。 addr: {0}, port: {1}, account: {2}".format(
                 addr, port, self.derive.user.account, name))
-            #self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
             self.thread_recv_data_flag = "start"
             self.thread_recv_data = threading.Thread(
                 target=self.__thread_recv_data)

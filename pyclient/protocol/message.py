@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import struct
-import hashlib
-from enum import Enum
 import zlib
 
 '''
@@ -19,8 +17,8 @@ CMD_LEN = 2
 
 def unpack_header(rawdata):
     l1, l2, l3, flag, cmd = struct.unpack("<BBBBH", rawdata[:DATA0_LEN])
-    l = l1 + (l2 << 8) + (l3 << 16)
-    return l, flag, cmd
+    templ = l1 + (l2 << 8) + (l3 << 16)
+    return templ, flag, cmd
 
 
 def unpack(rawdata):
@@ -33,10 +31,10 @@ def unpack(rawdata):
 
 
 def pack(cmd, data):
-    l = len(data) + CMD_LEN
-    l1 = l & 0xFF
-    l2 = (l >> 8) & 0xFF
-    l3 = (l >> 16) & 0xFF
+    templ = len(data) + CMD_LEN
+    l1 = templ & 0xFF
+    l2 = (templ >> 8) & 0xFF
+    l3 = (templ >> 16) & 0xFF
     flag = 0
     return struct.pack("<BBBBH", l1, l2, l3, flag, cmd) + data
 
@@ -50,14 +48,14 @@ def on_recv(client, data):
     rawdata = left_data + data
     while True:
         if len(rawdata) > DATA0_LEN:
-            l, flag, cmd = unpack_header(rawdata)
+            templ, flag, cmd = unpack_header(rawdata)
             data = rawdata[DATA0_LEN:]
-            if l <= len(data) + CMD_LEN:
+            if templ <= len(data) + CMD_LEN:
                 if flag == 1:
-                    msgs.append((cmd, zlib.decompress(data[:l - CMD_LEN])))
+                    msgs.append((cmd, zlib.decompress(data[:templ - CMD_LEN])))
                 else:
-                    msgs.append((cmd, data[:l - CMD_LEN]))
-                rawdata = data[l - CMD_LEN:]
+                    msgs.append((cmd, data[:templ - CMD_LEN]))
+                rawdata = data[templ - CMD_LEN:]
             else:
                 break
         else:

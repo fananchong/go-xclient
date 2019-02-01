@@ -1,7 +1,6 @@
 #! python3
 # -*- coding: utf-8 -*-
 
-import wx
 import tcp_client
 import protocol.login_pb2
 import protocol.cmd
@@ -31,8 +30,10 @@ class LoginClient(tcp_client.TcpClient):
     def on_login_msg(self, data):
         msg = protocol.login_pb2.MSG_LOGIN_RESULT()
         msg.ParseFromString(data)
-        log.info("登陆结果。 Err: {0}, Token: {1}, Address: {2}, Port: {3}, NodeTyps: {4}, account: {5}".format(
-            msg.Err, msg.Token, msg.Address, msg.Port, msg.NodeTyps, self.user.account))
+        log.info("登陆结果。 Err: {0}, Token: {1}, account: {2}".format(
+            msg.Err, msg.Token, self.user.account))
+        log.info("Address: {0}, Port: {1}, NodeTyps: {2}, account: {3}".format(
+            msg.Address, msg.Port, msg.NodeTyps, self.user.account))
         self.user.gateway_client.token = msg.Token
         for i in range(len(msg.NodeTyps)):
             if msg.NodeTyps[i] == 3:
@@ -42,4 +43,4 @@ class LoginClient(tcp_client.TcpClient):
         if msg.Err == 0:
             self.user.gateway_client.verify_token()
         else:
-            log.error("登录失败，account: {0}", self.user.account)
+            log.error("登录失败，account: {0}".format(self.user.account))
