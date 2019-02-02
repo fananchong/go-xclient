@@ -33,5 +33,5 @@ class GatewayClient(tcp_client.TcpClient):
     def on_verify_token_msg(self, data):
         msg = protocol.gateway_pb2.MSG_GATEWAY_VERIFY_TOKEN_RESULT()
         msg.ParseFromString(data)
-        log.info("令牌验证结果。 Err: {0}, account: {5}".format(
+        log.info("令牌验证结果。 Err: {0}, account: {1}".format(
             msg.Err, self.user.account))

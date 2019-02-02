@@ -47,7 +47,7 @@ def on_recv(client, data):
     left_data = client.left_data
     rawdata = left_data + data
     while True:
-        if len(rawdata) > DATA0_LEN:
+        if len(rawdata) >= DATA0_LEN:
             templ, flag, cmd = unpack_header(rawdata)
             data = rawdata[DATA0_LEN:]
             if templ <= len(data) + CMD_LEN:
