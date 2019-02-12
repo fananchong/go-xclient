@@ -35,3 +35,7 @@ class GatewayClient(tcp_client.TcpClient):
         msg.ParseFromString(data)
         log.info("令牌验证结果。 Err: {0}, account: {1}".format(
             msg.Err, self.user.account))
+        if msg.Err == 0:
+            pass
+        else:
+            pass

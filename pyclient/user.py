@@ -2,6 +2,7 @@
 
 import login_client
 import gateway_client
+import lobby_client
 
 
 class User():
@@ -10,6 +11,7 @@ class User():
         self.cfg = cfg
         self.login_client = login_client.LoginClient(self, args, cfg)
         self.gateway_client = gateway_client.GatewayClient(self, args, cfg)
+        self.lobby_client = lobby_client.LobbyClient(self, args, cfg)
         self.account = ""
         self.password = ""
 
@@ -21,3 +23,4 @@ class User():
     def close(self):
         self.login_client.close()
         self.gateway_client.close()
+        self.lobby_client.close()

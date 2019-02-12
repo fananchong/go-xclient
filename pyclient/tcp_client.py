@@ -60,11 +60,21 @@ class TcpClient:
 
     def close(self):
         if self.sock is not None:
+            log.info("[{0}] socket 关闭中, account: {1}".format(
+                self.name, self.derive.user.account))
+            self.sock.shutdown(socket.SHUT_RDWR)
             self.sock.close()
             self.sock = None
+            log.info("[{0}] socket 关闭完毕, account: {1}".format(
+                self.name, self.derive.user.account))
         if self.thread_recv_data is not None:
-            self.thread_recv_data_flag = "terminate"
-            self.thread_recv_data.join()
+            if self.thread_recv_data.isAlive():
+                log.info("[{0}] 接收线程关闭中, account: {1}".format(
+                    self.name, self.derive.user.account))
+                self.thread_recv_data_flag = "terminate"
+                self.thread_recv_data.join()
+                log.info("[{0}] 接收线程关闭完毕, account: {1}".format(
+                    self.name, self.derive.user.account))
             self.thread_recv_data = None
 
     def __thread_recv_data(self):
@@ -76,12 +86,15 @@ class TcpClient:
                 BUFSIZ = 128 * 1024
                 data = self.sock.recv(BUFSIZ)
                 if data is None or len(data) == 0:
-                    self.sock.close()
-                    self.sock = None
+                    if self.sock is not None:
+                        self.sock.shutdown(socket.SHUT_RDWR)
+                        self.sock.close()
+                        self.sock = None
                     break
             except Exception as e:
                 log.error(e)
                 if self.sock is not None:
+                    self.sock.shutdown(socket.SHUT_RDWR)
                     self.sock.close()
                     self.sock = None
                 log.info("[{1}] 关闭 TCP 接收数据线程。account: {0}".format(
