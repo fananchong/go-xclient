@@ -5,6 +5,7 @@ import tcp_client
 import protocol.gateway_pb2
 import protocol.cmd
 import log
+from server_type import *
 
 
 class GatewayClient(tcp_client.TcpClient):
@@ -19,6 +20,7 @@ class GatewayClient(tcp_client.TcpClient):
 
     def init_cmds(self):
         self.cmds[protocol.cmd.VERIFY_TOKEN] = self.on_verify_token_msg
+        self.default_cmd_hander = self.user.clients[ServerType.Lobby].on_recv
 
     def verify_token(self):
         if self.connect("网关", self.address, self.port) is False:
@@ -36,6 +38,6 @@ class GatewayClient(tcp_client.TcpClient):
         log.info("令牌验证结果。 Err: {0}, account: {1}".format(
             msg.Err, self.user.account))
         if msg.Err == 0:
-            pass
+            self.user.clients[ServerType.Lobby].login()
         else:
-            pass
+            log.error("令牌验证失败")

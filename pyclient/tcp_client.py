@@ -15,7 +15,10 @@ class TcpClient:
         self.thread_recv_data = None
         self.thread_recv_data_flag = "terminate"
         self.left_data = b""
+        self.default_cmd_hander = None
         self.cmds = {}
+
+    def init(self):
         self.derive.init_cmds()
 
     def connect(self, name, addr, port):
@@ -55,8 +58,11 @@ class TcpClient:
             if cmd in self.cmds:
                 self.cmds[cmd](data)
             else:
-                log.error("[{2}] 未处理的消息。 cmd: {0}, account: {1}".format(
-                    cmd, self.derive.user.account, self.name))
+                if self.default_cmd_hander is not None:
+                    self.default_cmd_hander(cmd, data)
+                else:
+                    log.error("[{2}] 未处理的消息。 cmd: {0}, account: {1}".format(
+                        cmd, self.derive.user.account, self.name))
 
     def close(self):
         if self.sock is not None:

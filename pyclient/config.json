@@ -2,7 +2,7 @@
     "title": "pyclient",
     "logfile": "log.txt",
     "addr": "192.168.23.172",
-    "port": 7503,
+    "port": 7501,
     "login": {
         "account": "test1",
         "password": "123456"

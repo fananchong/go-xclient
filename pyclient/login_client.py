@@ -5,6 +5,7 @@ import tcp_client
 import protocol.login_pb2
 import protocol.cmd
 import log
+from server_type import *
 
 
 class LoginClient(tcp_client.TcpClient):
@@ -34,13 +35,13 @@ class LoginClient(tcp_client.TcpClient):
             msg.Err, msg.Token, self.user.account))
         log.info("Address: {0}, Port: {1}, NodeTyps: {2}, account: {3}".format(
             msg.Address, msg.Port, msg.NodeTyps, self.user.account))
-        self.user.gateway_client.token = msg.Token
+        self.user.clients[ServerType.Gateway].token = msg.Token
         for i in range(len(msg.NodeTyps)):
             if msg.NodeTyps[i] == 3:
-                self.user.gateway_client.address = msg.Address[i]
-                self.user.gateway_client.port = msg.Port[i]
+                self.user.clients[ServerType.Gateway].address = msg.Address[i]
+                self.user.clients[ServerType.Gateway].port = msg.Port[i]
                 break
         if msg.Err == 0:
-            self.user.gateway_client.verify_token()
+            self.user.clients[ServerType.Gateway].verify_token()
         else:
             log.error("登录失败，account: {0}".format(self.user.account))

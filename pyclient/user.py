@@ -3,24 +3,34 @@
 import login_client
 import gateway_client
 import lobby_client
+from server_type import *
 
 
 class User():
     def __init__(self, args, cfg):
         self.args = args
         self.cfg = cfg
-        self.login_client = login_client.LoginClient(self, args, cfg)
-        self.gateway_client = gateway_client.GatewayClient(self, args, cfg)
-        self.lobby_client = lobby_client.LobbyClient(self, args, cfg)
+        self.clients = {}
         self.account = ""
         self.password = ""
+
+    def init(self):
+        self.clients[ServerType.Login] = login_client.LoginClient(
+            self, self.args, self. cfg)
+        self.clients[ServerType.Gateway] = gateway_client.GatewayClient(
+            self, self.args, self. cfg)
+        self.clients[ServerType.Lobby] = lobby_client.LobbyClient(
+            self, self.args, self. cfg)
+
+        for client in self.clients.values():
+            client.init()
+        return self
 
     def login(self, account, password):
         self.account = account
         self.password = password
-        self.login_client.login()
+        self.clients[ServerType.Login].login()
 
     def close(self):
-        self.login_client.close()
-        self.gateway_client.close()
-        self.lobby_client.close()
+        for client in self.clients.values():
+            client.close()
