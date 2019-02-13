@@ -68,8 +68,14 @@ class TcpClient:
         if self.sock is not None:
             log.info("[{0}] socket 关闭中, account: {1}".format(
                 self.name, self.derive.user.account))
-            self.sock.shutdown(socket.SHUT_RDWR)
-            self.sock.close()
+            try:
+                self.sock.shutdown(socket.SHUT_RDWR)
+            except:
+                pass
+            try:
+                self.sock.close()
+            except:
+                pass
             self.sock = None
             log.info("[{0}] socket 关闭完毕, account: {1}".format(
                 self.name, self.derive.user.account))
