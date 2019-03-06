@@ -13,5 +13,5 @@ VERIFY_TOKEN = protocol.gateway_pb2._CMD_GATEWAY_ENUM.values_by_name["VERIFY_TOK
 
 # lobby server
 LOBBY_MSGCMDOFFSET = protocol.lobby_pb2._CMD_LOBBY_ENUM.values_by_name["MSGCMDOFFSET"].number
-QUERY_ROLELIST = LOBBY_MSGCMDOFFSET + \
-    protocol.lobby_pb2._CMD_LOBBY_ENUM.values_by_name["QUERY_ROLELIST"].number
+LOGIN_LOBBY = LOBBY_MSGCMDOFFSET + \
+    protocol.lobby_pb2._CMD_LOBBY_ENUM.values_by_name["LOGIN"].number

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import wx
-
+import hashlib
 
 class LoginWindow(wx.Frame):
     def __init__(self, user, args, cfg):
@@ -31,6 +31,9 @@ class LoginWindow(wx.Frame):
     def OnLogin(self, evt):
         account = self.txtAccount.GetValue()
         password = self.txtPassword.GetValue()
+        m = hashlib.md5()   
+        m.update(password.encode('utf-8')) 
+        password = m.hexdigest()
         self.user.login(account, password)
 
     def OnClose(self, evt):

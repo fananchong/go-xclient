@@ -19,18 +19,21 @@ class LobbyClient():
         self.init_cmds()
 
     def init_cmds(self):
-        self.cmds[protocol.cmd.QUERY_ROLELIST] = self.on_query_rolelist_msg
+        self.cmds[protocol.cmd.LOGIN_LOBBY] = self.on_login_msg
 
     def login(self):
         log.info("开始请求角色列表协议。 account: {0}".format(self.user.account))
-        msg = protocol.lobby_pb2.MSG_LOBBY_QUERY_ROLELIST()
-        self.send(protocol.cmd.QUERY_ROLELIST, msg)
+        msg = protocol.lobby_pb2.MSG_LOBBY_LOGIN()
+        self.send(protocol.cmd.LOGIN_LOBBY, msg)
 
-    def on_query_rolelist_msg(self, data):
-        msg = protocol.lobby_pb2.MSG_LOBBY_QUERY_ROLELIST_RESULT()
+    def on_login_msg(self, data):
+        msg = protocol.lobby_pb2.MSG_LOBBY_LOGIN_RESULT()
         msg.ParseFromString(data)
         log.info("请求角色列表结果。 Err: {0}, account: {1}".format(
             msg.Err, self.user.account))
+        if msg.Err == 0:
+            for index in range(0, len(msg.Roles)):
+                log.info("\t\t角色{0}: {1}".format(index, msg.Roles[index]))
 
     def on_recv(self, cmd, data):
         if cmd in self.cmds:
