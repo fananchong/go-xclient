@@ -13,11 +13,13 @@ class LobbyWindow(wx.Frame):
         self.init()
 
     def init(self):
-        self.SetTitle(self.cfg["title"])
+        self.SetTitle(self.cfg["title"] + " - 大厅")
         self.Bind(wx.EVT_CLOSE, self.OnClose)
-        w = 240
-        h = 160
+        w = 1200
+        h = 800
         self.SetMaxSize((w, h))
+        self.SetMinSize((w, h))
+        self.SetSize((w, h))
         self.Centre()
 
     def OnClose(self, evt):

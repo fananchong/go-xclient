@@ -6,6 +6,9 @@ import protocol.lobby_custom_pb2
 import protocol.cmd
 import log
 from server_type import *
+import lobby_window
+import login_window
+import wx
 
 
 class LobbyClient():
@@ -70,8 +73,8 @@ class LobbyClient():
         log.info("请求进入游戏结果。 Err: {0}, account: {1}".format(
             msg.Err, self.user.account))
         if msg.Err == 0:
-            # TODO: 打开大厅界面
-            pass
+            login_window.close(1)
+            wx.CallAfter(lobby_window.new, self.user, self.args, self.cfg)
 
     def on_recv(self, cmd, data):
         if cmd in self.cmds:
