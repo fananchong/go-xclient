@@ -14,6 +14,7 @@ class User():
         self.account = ""
         self.password = ""
         self.current_role_index = 0
+        self.current_role = None
 
     def init(self):
         self.clients[ServerType.Login] = login_client.LoginClient(

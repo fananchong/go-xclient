@@ -9,6 +9,7 @@ from server_type import *
 import lobby_window
 import login_window
 import wx
+import role
 
 
 class LobbyClient():
@@ -73,6 +74,9 @@ class LobbyClient():
         log.info("请求进入游戏结果。 Err: {0}, account: {1}".format(
             msg.Err, self.user.account))
         if msg.Err == 0:
+            self.user.current_role = role.Role(self.args, self.cfg)
+            self.user.current_role.id = msg.DetailInfo.BaseInfo.RoleID
+            self.user.current_role.name = msg.DetailInfo.BaseInfo.RoleName
             login_window.close(1)
             wx.CallAfter(lobby_window.new, self.user, self.args, self.cfg)
 

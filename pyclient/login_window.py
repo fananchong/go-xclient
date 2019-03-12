@@ -22,6 +22,11 @@ class LoginWindow(wx.Frame):
         self.SetMaxSize((w, h))
         self.SetMinSize((w, h))
         self.SetSize((w, h))
+        self.init_window()
+        self.Bind(wx.EVT_BUTTON, self.OnLogin, self.btnLogin)
+        self.Centre()
+
+    def init_window(self):
         wx.StaticText(self, -1, "账号：", pos=wx.Point(30, 15))
         self.txtAccount = wx.TextCtrl(
             self, -1, pos=(100, 15), size=(100, -1), value=self.cfg["login"]["account"])
@@ -29,8 +34,6 @@ class LoginWindow(wx.Frame):
         self.txtPassword = wx.TextCtrl(
             self, -1, pos=(100, 45), size=(100, -1), value=self.cfg["login"]["password"])
         self.btnLogin = wx.Button(self, -1, "登陆", pos=(70, 90), size=(100, 25))
-        self.Bind(wx.EVT_BUTTON, self.OnLogin, self.btnLogin)
-        self.Centre()
 
     def OnLogin(self, evt):
         account = self.txtAccount.GetValue()
