@@ -60,11 +60,9 @@ class LobbyWindow(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.OnMatch, binMatch)
 
     def OnChat(self, evt):
-        log.info("开始发送聊天协议。 account: {0}".format(self.user.account))
-        msg = protocol.lobby_pb2.MSG_LOBBY_CHAT()
-        msg.To = self.chatTo.GetValue()
-        msg.Txt = self.chatTxt.GetValue()
-        self.user.clients[ServerType.Lobby].send(protocol.cmd.CHAT, msg)
+        to = self.chatTo.GetValue()
+        txt = self.chatTxt.GetValue()
+        self.user.clients[ServerType.Lobby].chat(to, txt)
 
     def OnMatch(self, evt):
         pass

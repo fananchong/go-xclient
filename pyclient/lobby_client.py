@@ -26,6 +26,7 @@ class LobbyClient():
         self.cmds[protocol.cmd.LOGIN_LOBBY] = self.on_login_msg
         self.cmds[protocol.cmd.CREATE_ROLE] = self.on_create_role_msg
         self.cmds[protocol.cmd.ENTER_GAME] = self.on_enter_game_msg
+        self.cmds[protocol.cmd.CHAT] = self.on_chat_msg
 
     def login(self):
         log.info("开始请求角色列表协议。 account: {0}".format(self.user.account))
@@ -79,6 +80,19 @@ class LobbyClient():
             self.user.current_role.name = msg.DetailInfo.BaseInfo.RoleName
             login_window.close(1)
             wx.CallAfter(lobby_window.new, self.user, self.args, self.cfg)
+
+    def chat(self, to, txt):
+        log.info("开始发送聊天协议。 account: {0}".format(self.user.account))
+        msg = protocol.lobby_pb2.MSG_LOBBY_CHAT()
+        msg.To = to
+        msg.Txt = txt
+        self.send(protocol.cmd.CHAT, msg)
+
+    def on_chat_msg(self, data):
+        msg = protocol.lobby_pb2.MSG_LOBBY_CHAT()
+        msg.ParseFromString(data)
+        log.info("收到聊天消息。 From: {0}, To: {1}, Txt: {2}".format(
+            msg.From, msg.To, msg.Txt))
 
     def on_recv(self, cmd, data):
         if cmd in self.cmds:
