@@ -29,14 +29,27 @@ class LobbyWindow(wx.Frame):
         (w, h) = self.GetClientSize()
 
         # 角色信息区
-        panelTopH = 50
+        panelTopH = 100
         panelTop = wx.Panel(self, -1, (1, 1), (w-2, panelTopH-2))
         wx.StaticText(panelTop, -1, "账号：", (30, 15))
         wx.StaticText(panelTop, -1, self.user.account,  (70, 15))
-        wx.StaticText(panelTop, -1, "角色ID：", (120, 15))
-        wx.StaticText(panelTop, -1, str(self.user.current_role.id), (170, 15))
-        wx.StaticText(panelTop, -1, "角色名：", (210, 15))
-        wx.StaticText(panelTop, -1, self.user.current_role.name, (260, 15))
+        wx.StaticText(panelTop, -1, "角色ID：", (210, 15))
+        wx.StaticText(panelTop, -1, str(self.user.current_role.id), (260, 15))
+        wx.StaticText(panelTop, -1, "角色名：", (390, 15))
+        wx.StaticText(panelTop, -1, self.user.current_role.name, (450, 15))
+
+        wx.StaticText(panelTop, -1, "网关地址：", (30, 35))
+        wx.StaticText(
+            panelTop, -1, self.user.clients[ServerType.Gateway].address,  (90, 35))
+        wx.StaticText(panelTop, -1, "网关端口：", (210, 35))
+        wx.StaticText(
+            panelTop, -1, str(self.user.clients[ServerType.Gateway].port), (270, 35))
+        wx.StaticText(panelTop, -1, "大厅地址：", (30, 55))
+        wx.StaticText(
+            panelTop, -1, self.user.clients[ServerType.Lobby].address,  (90, 55))
+        wx.StaticText(panelTop, -1, "大厅端口：", (210, 55))
+        wx.StaticText(
+            panelTop, -1, str(self.user.clients[ServerType.Lobby].port), (270, 55))
 
         # 聊天区
         panelChatH = 180
@@ -67,8 +80,12 @@ class LobbyWindow(wx.Frame):
         pass
 
     def add_chat_history(self, from_, to, txt):
-        if to is "":
+        if to == "":
             to = "所有人"
+        if from_ == self.user.current_role.name:
+            from_ = "我"
+        if to == self.user.current_role.name:
+            to = "我"
         self.chatHistory.AppendText(
             "【{0}】 对 【{1}】 说：{2}\n".format(from_, to, txt))
 

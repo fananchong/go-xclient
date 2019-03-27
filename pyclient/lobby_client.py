@@ -18,6 +18,8 @@ class LobbyClient():
         self.cfg = cfg
         self.args = args
         self.cmds = {}
+        self.address = ""
+        self.port = 0
 
     def init(self):
         self.init_cmds()
@@ -78,6 +80,8 @@ class LobbyClient():
             self.user.current_role = role.Role(self.args, self.cfg)
             self.user.current_role.id = msg.DetailInfo.BaseInfo.RoleID
             self.user.current_role.name = msg.DetailInfo.BaseInfo.RoleName
+            log.info("账号: {0}, 角色ID: {1}, 角色名: {2}".format(
+                self.user.account, self.user.current_role.id, self.user.current_role.name))
             login_window.close(1)
             wx.CallAfter(lobby_window.new, self.user, self.args, self.cfg)
 
