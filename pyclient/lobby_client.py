@@ -93,6 +93,7 @@ class LobbyClient():
         msg.ParseFromString(data)
         log.info("收到聊天消息。 From: {0}, To: {1}, Txt: {2}".format(
             msg.From, msg.To, msg.Txt))
+        lobby_window.get().add_chat_history(msg.From, msg.To, msg.Txt)
 
     def on_recv(self, cmd, data):
         if cmd in self.cmds:

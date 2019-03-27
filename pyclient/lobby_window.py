@@ -49,8 +49,7 @@ class LobbyWindow(wx.Frame):
         binChat = wx.Button(panelChat, -1, "发送", (w - 120, 15))
         self.Bind(wx.EVT_BUTTON, self.OnChat, binChat)
         self.chatHistory = wx.TextCtrl(
-            panelChat, -1, "", (30, 50), (w - 62, panelChatH - 60))
-        self.chatHistory.Enabled = False
+            panelChat, -1, "", (30, 50), (w - 62, panelChatH - 60), wx.TE_MULTILINE | wx.TE_READONLY)
 
         # 功能区
         panelFunction = wx.Panel(
@@ -67,6 +66,12 @@ class LobbyWindow(wx.Frame):
     def OnMatch(self, evt):
         pass
 
+    def add_chat_history(self, from_, to, txt):
+        if to is "":
+            to = "所有人"
+        self.chatHistory.AppendText(
+            "【{0}】 对 【{1}】 说：{2}\n".format(from_, to, txt))
+
     def OnClose(self, evt):
         self.user.close()
         evt.Skip()
@@ -79,3 +84,7 @@ def new(user, args, cfg):
     global g_win
     g_win = LobbyWindow(user, args, cfg)
     g_win.Show()
+
+
+def get():
+    return g_win
