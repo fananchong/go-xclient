@@ -77,7 +77,7 @@ class LobbyWindow(wx.Frame):
         self.user.clients[ServerType.Lobby].chat(to, txt)
 
     def OnMatch(self, evt):
-        pass
+        self.user.clients[ServerType.Lobby].match()
 
     def add_chat_history(self, from_, to, txt):
         if to == "":

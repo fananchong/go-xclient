@@ -99,6 +99,11 @@ class LobbyClient():
             msg.From, msg.To, msg.Txt))
         lobby_window.get().add_chat_history(msg.From, msg.To, msg.Txt)
 
+    def match(self):
+        log.info("开始发送匹配协议。 account: {0}".format(self.user.account))
+        msg = protocol.lobby_pb2.MSG_LOBBY_MATCH()
+        self.send(protocol.cmd.MATCH, msg)
+
     def on_recv(self, cmd, data):
         if cmd in self.cmds:
             self.cmds[cmd](data)
