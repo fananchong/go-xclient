@@ -104,6 +104,9 @@ class LobbyClient():
         msg = protocol.lobby_pb2.MSG_LOBBY_MATCH()
         self.send(protocol.cmd.MATCH, msg)
 
+    def on_match_msg(self, data):
+        pass
+
     def on_recv(self, cmd, data):
         if cmd in self.cmds:
             self.cmds[cmd](data)
