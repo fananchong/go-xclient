@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='login.proto',
   package='protocol',
   syntax='proto3',
-  serialized_pb=_b('\n\x0blogin.proto\x12\x08protocol\"+\n\tCMD_LOGIN\"\x1e\n\x04\x45NUM\x12\x0b\n\x07INVALID\x10\x00\x12\t\n\x05LOGIN\x10\x01\"2\n\x0f\x45NUM_LOGIN_MODE\"\x1f\n\x04\x45NUM\x12\x0b\n\x07\x44\x45\x46\x41ULT\x10\x00\x12\n\n\x06\x43USTOM\x10\x01\"E\n\x10\x45NUM_LOGIN_ERROR\"1\n\x04\x45NUM\x12\x06\n\x02OK\x10\x00\x12\x0f\n\x0bVERIFY_FAIL\x10\x01\x12\x10\n\x0cSYSTEM_ERROR\x10\x02\"n\n\tMSG_LOGIN\x12\x0f\n\x07\x41\x63\x63ount\x18\x01 \x01(\t\x12\x10\n\x08Password\x18\x02 \x01(\t\x12,\n\x04Mode\x18\x03 \x01(\x0e\x32\x1e.protocol.ENUM_LOGIN_MODE.ENUM\x12\x10\n\x08Userdata\x18\x04 \x01(\x0c\"\x80\x01\n\x10MSG_LOGIN_RESULT\x12,\n\x03\x45rr\x18\x01 \x01(\x0e\x32\x1f.protocol.ENUM_LOGIN_ERROR.ENUM\x12\r\n\x05Token\x18\x02 \x01(\t\x12\x0f\n\x07\x41\x64\x64ress\x18\x03 \x03(\t\x12\x0c\n\x04Port\x18\x04 \x03(\x05\x12\x10\n\x08NodeTyps\x18\x05 \x03(\x05\x62\x06proto3')
+  serialized_pb=_b('\n\x0blogin.proto\x12\x08protocol\"+\n\tCMD_LOGIN\"\x1e\n\x04\x45NUM\x12\x0b\n\x07INVALID\x10\x00\x12\t\n\x05LOGIN\x10\x01\"2\n\x0f\x45NUM_LOGIN_MODE\"\x1f\n\x04\x45NUM\x12\x0b\n\x07\x44\x45\x46\x41ULT\x10\x00\x12\n\n\x06\x43USTOM\x10\x01\"E\n\x10\x45NUM_LOGIN_ERROR\"1\n\x04\x45NUM\x12\x06\n\x02OK\x10\x00\x12\x0f\n\x0bVERIFY_FAIL\x10\x01\x12\x10\n\x0cSYSTEM_ERROR\x10\x02\"n\n\tMSG_LOGIN\x12\x0f\n\x07\x41\x63\x63ount\x18\x01 \x01(\t\x12\x10\n\x08Password\x18\x02 \x01(\t\x12,\n\x04Mode\x18\x03 \x01(\x0e\x32\x1e.protocol.ENUM_LOGIN_MODE.ENUM\x12\x10\n\x08Userdata\x18\x04 \x01(\x0c\"\x91\x01\n\x10MSG_LOGIN_RESULT\x12,\n\x03\x45rr\x18\x01 \x01(\x0e\x32\x1f.protocol.ENUM_LOGIN_ERROR.ENUM\x12\r\n\x05Token\x18\x02 \x01(\t\x12\x0f\n\x07\x41\x64\x64ress\x18\x03 \x03(\t\x12\x0c\n\x04Port\x18\x04 \x03(\x05\x12\x10\n\x08NodeTyps\x18\x05 \x03(\x05\x12\x0f\n\x07NodeIDs\x18\x06 \x03(\x05\x62\x06proto3')
 )
 
 
@@ -264,6 +264,13 @@ _MSG_LOGIN_RESULT = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='NodeIDs', full_name='protocol.MSG_LOGIN_RESULT.NodeIDs', index=5,
+      number=6, type=5, cpp_type=1, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -277,7 +284,7 @@ _MSG_LOGIN_RESULT = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=306,
-  serialized_end=434,
+  serialized_end=451,
 )
 
 _CMD_LOGIN_ENUM.containing_type = _CMD_LOGIN

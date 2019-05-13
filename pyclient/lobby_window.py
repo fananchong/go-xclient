@@ -38,18 +38,18 @@ class LobbyWindow(wx.Frame):
         wx.StaticText(panelTop, -1, "角色名：", (390, 15))
         wx.StaticText(panelTop, -1, self.user.current_role.name, (450, 15))
 
-        wx.StaticText(panelTop, -1, "网关地址：", (30, 35))
+        wx.StaticText(panelTop, -1, "网关ID：", (30, 35))
         wx.StaticText(
-            panelTop, -1, self.user.clients[ServerType.Gateway].address,  (90, 35))
-        wx.StaticText(panelTop, -1, "网关端口：", (210, 35))
+            panelTop, -1, str(self.user.clients[ServerType.Gateway].ID),  (80, 35))
+        wx.StaticText(panelTop, -1, "网关地址：", (210, 35))
         wx.StaticText(
-            panelTop, -1, str(self.user.clients[ServerType.Gateway].port), (270, 35))
-        wx.StaticText(panelTop, -1, "大厅地址：", (30, 55))
+            panelTop, -1, self.user.clients[ServerType.Gateway].address,  (270, 35))
+        wx.StaticText(panelTop, -1, "网关端口：", (390, 35))
         wx.StaticText(
-            panelTop, -1, self.user.clients[ServerType.Lobby].address,  (90, 55))
-        wx.StaticText(panelTop, -1, "大厅端口：", (210, 55))
+            panelTop, -1, str(self.user.clients[ServerType.Gateway].port), (450, 35))
+        wx.StaticText(panelTop, -1, "大厅ID：", (30, 55))
         wx.StaticText(
-            panelTop, -1, str(self.user.clients[ServerType.Lobby].port), (270, 55))
+            panelTop, -1, str(self.user.clients[ServerType.Lobby].ID),  (80, 55))
 
         # 聊天区
         panelChatH = 180

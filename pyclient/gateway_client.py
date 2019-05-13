@@ -16,6 +16,7 @@ class GatewayClient(tcp_client.TcpClient):
         self.args = args
         self.address = ""
         self.port = 0
+        self.ID = 0
         self.token = ""
 
     def init_cmds(self):

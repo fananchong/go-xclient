@@ -40,9 +40,9 @@ class LoginClient(tcp_client.TcpClient):
             if msg.NodeTyps[i] == 3:
                 self.user.clients[ServerType.Gateway].address = msg.Address[i]
                 self.user.clients[ServerType.Gateway].port = msg.Port[i]
+                self.user.clients[ServerType.Gateway].ID = msg.NodeIDs[i]
             elif msg.NodeTyps[i] == 4:
-                self.user.clients[ServerType.Lobby].address = msg.Address[i]
-                self.user.clients[ServerType.Lobby].port = msg.Port[i]
+                self.user.clients[ServerType.Lobby].ID = msg.NodeIDs[i]
         if msg.Err == 0:
             self.user.clients[ServerType.Gateway].verify_token()
         else:

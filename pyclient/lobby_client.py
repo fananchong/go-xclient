@@ -18,8 +18,7 @@ class LobbyClient():
         self.cfg = cfg
         self.args = args
         self.cmds = {}
-        self.address = ""
-        self.port = 0
+        self.ID = 0
 
     def init(self):
         self.init_cmds()
