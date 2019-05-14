@@ -28,6 +28,7 @@ class LobbyClient():
         self.cmds[protocol.cmd.CREATE_ROLE] = self.on_create_role_msg
         self.cmds[protocol.cmd.ENTER_GAME] = self.on_enter_game_msg
         self.cmds[protocol.cmd.CHAT] = self.on_chat_msg
+        self.cmds[protocol.cmd.MATCH_RESULT] = self.on_match_msg
 
     def login(self):
         log.info("开始请求角色列表协议。 account: {0}".format(self.user.account))
@@ -104,7 +105,9 @@ class LobbyClient():
         self.send(protocol.cmd.MATCH, msg)
 
     def on_match_msg(self, data):
-        pass
+        msg = protocol.lobby_pb2.MSG_LOBBY_MATCH_RESULT()
+        msg.ParseFromString(data)
+        log.info("收到匹配协议。 account: {0}".format(self.user.account))
 
     def on_recv(self, cmd, data):
         if cmd in self.cmds:

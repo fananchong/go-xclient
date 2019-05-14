@@ -23,3 +23,5 @@ CHAT = LOBBY_MSGCMDOFFSET + \
     protocol.lobby_pb2._CMD_LOBBY_ENUM.values_by_name["CHAT"].number
 MATCH = LOBBY_MSGCMDOFFSET + \
     protocol.lobby_pb2._CMD_LOBBY_ENUM.values_by_name["MATCH"].number
+MATCH_RESULT = LOBBY_MSGCMDOFFSET + \
+    protocol.lobby_pb2._CMD_LOBBY_ENUM.values_by_name["MATCH_RESULT"].number
